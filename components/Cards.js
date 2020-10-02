@@ -20,3 +20,59 @@
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
+import axios from "axios"
+axios.get("https://lambda-times-api.herokuapp.com/articles")
+.then(res => {
+    console.log(res)
+    res.data.articles.bootstrap.forEach(item => {
+        cardsContainerDiv.appendChild(cardMaker(item))
+    })
+    res.data.articles.javascript.forEach(item => {
+        cardsContainerDiv.appendChild(cardMaker(item))
+    })
+    res.data.articles.jquery.forEach(item => {
+        cardsContainerDiv.appendChild(cardMaker(item))
+    })
+    res.data.articles.node.forEach(item => {
+        cardsContainerDiv.appendChild(cardMaker(item))
+    })
+    res.data.articles.technology.forEach(item => {
+        cardsContainerDiv.appendChild(cardMaker(item))
+    })
+})
+.catch(err => {
+    console.log(err)
+})
+
+const cardsContainerDiv = document.querySelector(".cards-container")
+
+const cardMaker = (dataObj) => {
+    const cardDiv = document.createElement("div")
+    const headlineDiv = document.createElement("div")
+    const authorDiv = document.createElement("div")
+    const imgContainerDiv = document.createElement("div")
+    const img = document.createElement("img")
+    const span = document.createElement("span")
+
+    img.src = dataObj.authorPhoto
+
+    cardDiv.classList.add("card")
+    headlineDiv.classList.add("headline")
+    authorDiv.classList.add("author")
+    imgContainerDiv.classList.add("img-container")
+
+    headlineDiv.textContent = dataObj.headline;
+    span.textContent = `By: ${dataObj.authorName}`;
+
+    cardDiv.appendChild(headlineDiv)
+    cardDiv.appendChild(authorDiv)
+    authorDiv.appendChild(imgContainerDiv)
+    imgContainerDiv.appendChild(img)
+    authorDiv.appendChild(span)
+
+    headlineDiv.addEventListener("click", () => {
+        console.log(`${dataObj.headline}`)
+    })
+
+    return cardDiv
+}

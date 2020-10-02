@@ -12,7 +12,6 @@
 import axios from "axios"
 axios.get("https://lambda-times-api.herokuapp.com/topics")
 .then(res => {
-    console.log(res)
     res.data.topics.forEach(item => {
         topicsDiv.appendChild(tabMaker(item))
     })
@@ -23,12 +22,12 @@ axios.get("https://lambda-times-api.herokuapp.com/topics")
 
 const topicsDiv = document.querySelector(".topics")
 
-const tabMaker = (data) => {
+const tabMaker = (dataObj) => {
     const tabDiv = document.createElement("div")
 
     tabDiv.classList.add("tab")
 
-    tabDiv.textContent = data;
+    tabDiv.textContent = dataObj;
 
     return tabDiv
 }
